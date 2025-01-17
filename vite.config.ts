@@ -7,7 +7,7 @@ export default defineConfig({
   build: {
     outDir: '../dist', // Output directory for build
   },
-  base: '/vite-typescript-react-pages-template/', // Replace with your repository name
+  base: '/specifier/', // Replace with your repository name
   plugins: [react()],
   test: {
     globals: true, // Makes test helpers globally available
