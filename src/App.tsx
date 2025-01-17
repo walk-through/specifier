@@ -15,10 +15,10 @@ function App() {
     setClient(openAiClient)
   }
 
+  /** Start a brand new recording session */
   const handleRecord = async () => {
     if (!client) return
     try {
-      // Begin recording:
       const session = await getTranscription(client)
       setRecordingSession(session)
     } catch (error) {
@@ -26,20 +26,27 @@ function App() {
     }
   }
 
-  const handleStop = async () => {
+  /**
+   * Stop the current recording session, get the transcript,
+   * then immediately start a new session automatically.
+   */
+  const handleStopAndReRecord = async () => {
     if (!recordingSession) return
     try {
-      // Stop recording and get transcription:
       const text = await recordingSession.getTranscript()
-      setTranscriptions(prev => [...prev, text])
+      setTranscriptions((prev) => [...prev, text])
       setRecordingSession(null)
     } catch (error) {
       console.error("Failed to get transcription:", error)
+      setRecordingSession(null) // clean up in case of error
     }
+    // Start new recording after stopping
+    handleRecord()
   }
 
   return (
     <div style={{ padding: '1rem' }}>
+      {/* If we don't have a client set up, ask for the key */}
       {!client ? (
         <div>
           <h2>Enter your OpenAI API key:</h2>
@@ -54,18 +61,22 @@ function App() {
         </div>
       ) : (
         <div>
+          {/* Recording control button */}
           <div style={{ marginBottom: '1rem' }}>
             {!recordingSession ? (
+              // If NOT recording, show a mic icon
               <button onClick={handleRecord} style={{ fontSize: '2rem', cursor: 'pointer' }}>
-                🔴
+                🎤
               </button>
             ) : (
-              <button onClick={handleStop} style={{ fontSize: '2rem', cursor: 'pointer' }}>
-                🛑
+              // If recording, show a red dot icon
+              <button onClick={handleStopAndReRecord} style={{ fontSize: '2rem', cursor: 'pointer' }}>
+                🔴
               </button>
             )}
           </div>
-          
+
+          {/* Transcriptions list */}
           <h3>Transcriptions:</h3>
           <div>
             {transcriptions.map((t, i) => (
