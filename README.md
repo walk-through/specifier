@@ -1,4 +1,4 @@
-[![Run Tests](https://github.com/jcwilk/vite-typescript-react-pages-template/actions/workflows/test.yml/badge.svg)](https://github.com/jcwilk/vite-typescript-react-pages-template/actions?query=workflow%3A%22Run%20Tests%22)
+[![Run Tests](https://github.com/walk-through/specifier/actions/workflows/test.yml/badge.svg)](https://github.com/walk-through/specifier/actions?query=workflow%3A%22Run%20Tests%22)
 (Fix this badge after forking from template ^)
 
 # React + TypeScript + Vite + Vitest + Github Pages
